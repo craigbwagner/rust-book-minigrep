@@ -1,4 +1,4 @@
-use std::{env, fs, process};
+use std::{env, error::Error, fs, process};
 
 struct Config {
     query: String,
@@ -25,6 +25,10 @@ fn main() {
         process::exit(1);
     });
 
-    let contents =
-        fs::read_to_string(config.file_path).expect("Should have been able to read the file");
+    run(config);
+}
+
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
+    Ok(())
 }
